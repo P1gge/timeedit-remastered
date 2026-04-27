@@ -1,0 +1,131 @@
+body {
+    margin: 0;
+    background-color: rgb(44, 44, 44);
+    font-family: Helvetica;
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    text-align: center;
+    margin-top: 40px;
+}
+
+header h1 {
+    font-size: 48px;
+    margin: 0;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+}
+
+header a:hover {
+    color: #9DFFDD;
+    text-decoration: underline;
+}
+
+#schedule {
+    width: 80%;
+    min-height: 600px;
+
+    margin-top: 40px;
+
+    color: black;
+
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 12px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+#schedule-header {
+    flex: 1;
+
+    background-color: #9fded6;
+
+    border: 8px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px 12px 0px 0px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 25px;
+}
+
+#schedule-header input, #schedule-header select {
+    padding: 8px 10px;
+    border-radius: 6px;
+
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    outline: none;
+
+    font-size: 14px;
+}
+
+.header-center {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+}
+
+#search {
+    padding: 10px 12px;
+    background: transparent;
+
+    font-size: 14px;
+    width: 200px;
+}
+
+#search:focus, #group-select:focus {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+#group-select {
+    border: none;
+    outline: none;
+
+    padding: 10px 12px;
+    background: transparent;
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+#load {
+    padding: 10px 16px;
+
+    border: none;
+    border-radius: 10px;
+
+    background-color: rgba(0, 0, 0, 0.1);
+    color: white;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+#load:hover {
+    background-color: rgba(0, 0, 0, 0.15);
+    transform: translateY(-1px);
+}
+
+#schedule-content {
+    flex: 6;
+
+    background-color: bisque;
+
+    border: 8px solid rgba(0, 0, 0, 0.1);
+    border-top: 0px;
+    border-radius: 0px 0px 12px 12px;
+
+    padding: 20px;
+}
