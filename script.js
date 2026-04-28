@@ -126,9 +126,7 @@ function scramble(query, reverse=false) {
     ];
 
     let orderedSteps = steps.slice();
-    console.log(orderedSteps);
     if (reverse) orderedSteps.reverse();
-    console.log(orderedSteps);
 
     for (let f of orderedSteps) {
         result = f(result, reverse);
@@ -137,4 +135,33 @@ function scramble(query, reverse=false) {
     return encodeURIComponent(result);
 }
 
-console.log(decodeURIComponent(scramble("6y7YQQu1QZnZQ28Z48beZ35690Q", true)));
+let keyValues = "sid=3&objects=957.8&p=0.m,20260607.x";
+
+console.log(scramble(keyValues))
+
+// TKDAT-1 + ZBASS-1
+//console.log(decodeURIComponent(scramble("14QYZY3Q7Z09Q2v04Y62Q35y90Z6g19x1Y60gQXX70", true)));
+// h=t&sid=3&objects=957.8,932.8&ox=0&p=0.m,20260607.x&types=0&fe=0
+
+// TKDAT-1
+//console.log(decodeURIComponent(scramble("6y7YQQu1QZnZQ28Z48beZ35690Q", true)));
+// sid=3&objects=957.8&p=4&l=sv&e=2604
+
+/*
+
+Params : 
+- sid (school id?)
+- objects (classes/courses)
+- p (period)
+- l (language)
+- e (?)
+
+- h (?)
+- ox (?)
+- types (?)
+- fe (?)
+
+*/
+
+// ---------------- Query builder ----------------
+
