@@ -4,11 +4,22 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/url"
+	"strconv"
 	"strings"
 	"time"
 )
 
 // Structures
+
+type Schedule struct {
+	Records []struct {
+		ID   int `json:"id"`
+		Type struct {
+			ID int `json:"id"`
+		} `json:"type"`
+	} `json:"records"`
+}
 
 type Reservation struct {
 	StartDate string   `json:"startdate"`
@@ -129,17 +140,66 @@ func FetchEventsFromURL(url string) ([]Event, error) {
 	return events, nil
 }
 
+func fetchObjectIds(search string, amount int) ([]string, error) {
+	if amount < 0 || amount > 100 {
+		return nil, fmt.Errorf("amount outside of range")
+	}
+
+	base := "https://cloud.timeedit.net/chalmers/web/public/objects.json?"
+
+	flags := "max=" + strconv.Itoa(amount)
+	flags += "&sid=3"
+	flags += "&search_text=" + url.QueryEscape(search)
+	flags += "&types=10"
+
+	url := base + flags
+
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("bad response %s", resp.Status)
+	}
+
+	var schedule Schedule
+	err = json.NewDecoder(resp.Body).Decode(&schedule)
+	if err != nil {
+		return nil, err
+	}
+
+	var ids []string
+	for _, record := range schedule.Records {
+		combined := fmt.Sprintf("%d.%d", record.ID, record.Type.ID)
+		ids = append(ids, combined)
+	}
+
+	return ids, nil
+}
+
 // Main
 
 func main() {
-	url := "https://cloud.timeedit.net/chalmers/web/public/ri667XQ1091Z58Qv3Z0Yb6Z6y4YQ200nQYe1u2gQZ0.json"
+	//url := "https://cloud.timeedit.net/chalmers/web/public/ri667XQ1091Z58Qv3Z0Yb6Z6y4YQ200nQYe1u2gQZ0.json"
 
-	events, err := FetchEventsFromURL(url)
+	/*
+		events, err := FetchEventsFromURL(url)
+		if err != nil {
+			panic(err)
+		}
+
+			for _, e := range events {
+				fmt.Println(e.Title, e.Start)
+			}
+	*/
+
+	ids, err := fetchObjectIds("eda333", 100)
 	if err != nil {
 		panic(err)
 	}
-
-	for _, e := range events {
-		fmt.Println(e.Title, e.Start)
+	for _, id := range ids {
+		fmt.Println(id)
 	}
 }
